@@ -146,6 +146,10 @@ func WithStack(err error) error {
 	if err == nil {
 		return nil
 	}
+	// if err include stack , return it.
+	if _, ok := err.(*withStack); ok {
+		return err
+	}
 	return &withStack{
 		err,
 		callers(),
